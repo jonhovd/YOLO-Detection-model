@@ -10,11 +10,17 @@ cap = cv2.VideoCapture(video_path)
 # Load YOLO model with custom weights
 model = YOLO("Weights/best.pt")
 
+# Set the model to use CPU
+model.to('cpu')
+
 # Define class names
 classNames = ['0', 'c', 'garbage', 'garbage_bag', 'sampah-detection', 'trash']
 
 while True:
     success, img = cap.read()
+    if not success:
+        break
+
     results = model(img, stream=True)
     for r in results:
         boxes = r.boxes
@@ -33,3 +39,6 @@ while True:
     cv2.imshow("Image", img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
+cap.release()
+cv2.destroyAllWindows()

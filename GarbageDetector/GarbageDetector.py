@@ -6,6 +6,8 @@ from ultralytics import YOLO
 # Load YOLO model with custom weights
 yolo_model = YOLO("Weights/best.pt")
 
+yolo_model.to('cpu')
+
 # Define class names
 class_labels = ['0', 'c', 'garbage', 'garbage_bag', 'sampah-detection', 'trash']
 
@@ -36,9 +38,5 @@ for r in results:
 cv2.imshow("Image", img)
 
 # Close window when 'q' button is pressed
-while True:
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
+cv2.waitKey(0)
 cv2.destroyAllWindows()
-cv2.waitKey(1)  
